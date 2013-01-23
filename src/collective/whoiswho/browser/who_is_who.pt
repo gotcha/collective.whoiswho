@@ -1,0 +1,27 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+    xmlns:tal="http://xml.zope.org/namespaces/tal"
+    xmlns:metal="http://xml.zope.org/namespaces/metal"
+    xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+    lang="en"
+    metal:use-macro="here/main_template/macros/master"
+    i18n:domain="collective.whoiswho">
+
+    <div id="content" metal:fill-slot="content">
+      <h1 i18n:translate="">Who is who</h1>
+      <div id="content-core">
+        <dl>
+          <tal:groups repeat="group view/groups">
+          <dt>
+            <a tal:attributes="href group/url"
+              tal:content="group/title"
+              class="summary url">title</a>
+          </dt>
+          <dd tal:define="description group/description"
+             tal:condition="description"
+             tal:content="description">description</dd>
+          </tal:groups>
+        </dl>
+      </div>
+    </div>
+
+</html>

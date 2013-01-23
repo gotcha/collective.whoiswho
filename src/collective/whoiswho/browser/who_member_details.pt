@@ -1,0 +1,2 @@
+<a tal:attributes="href view/author_url"
+   i18n:translate="">Plone details</a>

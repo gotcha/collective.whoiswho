@@ -1,0 +1,51 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:i18n="http://namespaces.zope.org/i18n"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    i18n_domain="collective.jekyll">
+
+    <browser:page
+        for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+        name="who-is-who"
+        class=".views.Whoiswho"
+        template="who_is_who.pt"
+        permission="whoiswho.View"
+        layer=".interfaces.IThemeSpecific"
+        />
+
+    <browser:page
+        for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+        name="who-group-members"
+        class=".views.GroupMembers"
+        template="who_group_members.pt"
+        permission="whoiswho.View"
+        layer=".interfaces.IThemeSpecific"
+        />
+
+    <browser:page
+        for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+        name="who-member"
+        class=".views.Member"
+        template="who_member.pt"
+        permission="whoiswho.View"
+        layer=".interfaces.IThemeSpecific"
+        />
+
+    <browser:page
+        for="Products.PlonePAS.tools.memberdata.MemberData"
+        name="who-member-summary"
+        class=".views.MemberSummary"
+        permission="whoiswho.View"
+        layer=".interfaces.IThemeSpecific"
+        />
+
+    <browser:page
+        for="Products.PlonePAS.tools.memberdata.MemberData"
+        name="who-member-details"
+        class=".views.MemberDetails"
+        template="who_member_details.pt"
+        permission="whoiswho.View"
+        layer=".interfaces.IThemeSpecific"
+        />
+
+</configure>
