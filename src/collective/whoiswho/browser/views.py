@@ -19,27 +19,27 @@ class BaseView(BrowserView):
     @property
     def portal_state(self):
         return getMultiAdapter((self.context, self.request),
-                name=u"plone_portal_state")
+                               name=u"plone_portal_state")
 
     def getGroupInfo(self, id):
         group = self.groups_tool.getGroupById(id)
         result = dict(group=group,
-                title=group.getGroupTitleOrName(),
-                description=group.getProperty('description', ''),
-                url="{0}?group_id={1}".format(self.group_details_url, id))
+                      title=group.getGroupTitleOrName(),
+                      description=group.getProperty('description', ''),
+                      url="{0}?group_id={1}".format(self.group_details_url, id))
         return result
 
     def getMemberInfo(self, id):
         member_info = self.membership_tool.getMemberInfo(id)
         member = self.membership_tool.getMemberById(id)
         summary_view = getMultiAdapter((member, self.request),
-                name=u"who-member-summary")
+                                       name=u"who-member-summary")
         group_ids = self.groups_tool.getGroupsForPrincipal(member)
         result = dict(title=member_info['fullname'],
-                summary=summary_view(),
-                url="{0}?member_id={1}".format(self.member_url, id),
-                group_ids=group_ids,
-                member=member)
+                      summary=summary_view(),
+                      url="{0}?member_id={1}".format(self.member_url, id),
+                      group_ids=group_ids,
+                      member=member)
         return result
 
     def getGroupsSortedByTitle(self, group_ids):
@@ -86,7 +86,7 @@ class Member(BaseView):
 
     def details(self):
         details_view = getMultiAdapter((self.member['member'], self.request),
-                name=u"who-member-details")
+                                       name=u"who-member-details")
         return details_view()
 
 
@@ -107,4 +107,4 @@ class MemberDetails(BrowserView):
     @property
     def portal_state(self):
         return getMultiAdapter((self.context, self.request),
-                name=u"plone_portal_state")
+                               name=u"plone_portal_state")
