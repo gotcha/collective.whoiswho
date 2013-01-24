@@ -11,10 +11,10 @@ class BaseView(BrowserView):
         super(BaseView, self).__init__(context, request)
         self.groups_tool = getToolByName(self.context, 'portal_groups')
         self.membership_tool = getToolByName(self.context, 'portal_membership')
-        portal_url = self.portal_state.portal_url()
-        self.all_groups_url = "{0}/@@who-is-who".format(portal_url)
-        self.group_details_url = "{0}/@@who-group-members".format(portal_url)
-        self.member_url = "{0}/@@who-member".format(portal_url)
+        context_url = self.context.absolute_url()
+        self.all_groups_url = "{0}/@@who-is-who".format(context_url)
+        self.group_details_url = "{0}/@@who-group-members".format(context_url)
+        self.member_url = "{0}/@@who-member".format(context_url)
 
     @property
     def portal_state(self):
