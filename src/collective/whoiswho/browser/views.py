@@ -29,6 +29,13 @@ class BaseView(BrowserView):
                       url="{0}?group_id={1}".format(self.group_details_url, id))
         return result
 
+    def filter_groups(self, group_ids):
+        IGNORED_GROUPS=['Site Administrators', 'Reviewers', 'AuthenticatedUsers',
+                        'Administrators']
+        for group_id in group_ids:
+            if group_id not in IGNORED_GROUPS:
+               yield group_id
+
     def getMemberInfo(self, id):
         member_info = self.membership_tool.getMemberInfo(id)
         member = self.membership_tool.getMemberById(id)
@@ -44,7 +51,7 @@ class BaseView(BrowserView):
 
     def getGroupsSortedByTitle(self, group_ids):
         result = list()
-        for id in group_ids:
+        for id in self.filter_groups(group_ids):
             result.append(self.getGroupInfo(id))
         result.sort(cmp_by_title)
         return result
