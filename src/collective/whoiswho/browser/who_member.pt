@@ -7,12 +7,12 @@
     i18n:domain="collective.whoiswho">
 
     <div id="content" metal:fill-slot="content">
-      <h1 tal:content="view/member/title">Member Title</h1>
+      <h1 tal:content="view/member/@@who-member-title">Member Title</h1>
       <div id="content-core">
         <a tal:attributes="href view/all_groups_url"
            i18n:translate=""
            class="link-parent">Back to Who is who</a>
-        <div tal:replace="structure view/details">Details view</div>
+        <div tal:replace="structure view/member/@@who-member-details">Details view</div>
         <h2 i18n:translate="">Groups</h2>
         <dl>
         <tal:groups repeat="group view/groups">

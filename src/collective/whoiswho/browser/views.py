@@ -81,14 +81,10 @@ class Member(BaseView):
     def __init__(self, context, request):
         super(Member, self).__init__(context, request)
         member_id = request.member_id
-        self.member = self.getMemberInfo(member_id)
-        group_ids = self.member['group_ids']
+        member_info = self.getMemberInfo(member_id)
+        group_ids = member_info['group_ids']
+        self.member = member_info['member']
         self.groups = self.getGroupsSortedByTitle(group_ids)
-
-    def details(self):
-        details_view = getMultiAdapter((self.member['member'], self.request),
-                name=u"who-member-details")
-        return details_view()
 
 
 class MemberSummary(BrowserView):
