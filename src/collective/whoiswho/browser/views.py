@@ -30,12 +30,13 @@ class BaseView(BrowserView):
         return result
 
     def getMemberInfo(self, id):
-        member_info = self.membership_tool.getMemberInfo(id)
         member = self.membership_tool.getMemberById(id)
         summary_view = getMultiAdapter((member, self.request),
                 name=u"who-member-summary")
+        title_view = getMultiAdapter((member, self.request),
+                name=u"who-member-title")
         group_ids = self.groups_tool.getGroupsForPrincipal(member)
-        result = dict(title=member_info['fullname'],
+        result = dict(title=title_view(),
                 summary=summary_view(),
                 url="{0}?member_id={1}".format(self.member_url, id),
                 group_ids=group_ids,
@@ -94,6 +95,12 @@ class MemberSummary(BrowserView):
 
     def __call__(self):
         return ''
+
+
+class MemberTitle(BrowserView):
+
+    def __call__(self):
+        return self.context.getProperty('fullname')
 
 
 class MemberDetails(BrowserView):

@@ -48,4 +48,12 @@
         layer=".interfaces.IThemeSpecific"
         />
 
+    <browser:page
+        for="Products.PlonePAS.tools.memberdata.MemberData"
+        name="who-member-title"
+        class=".views.MemberTitle"
+        permission="whoiswho.View"
+        layer=".interfaces.IThemeSpecific"
+        />
+
 </configure>
