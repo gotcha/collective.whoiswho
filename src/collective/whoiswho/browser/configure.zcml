@@ -5,7 +5,7 @@
     i18n_domain="collective.jekyll">
 
     <browser:page
-        for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+        for="OFS.interfaces.IFolder"
         name="who-is-who"
         class=".views.Whoiswho"
         template="who_is_who.pt"
@@ -14,7 +14,7 @@
         />
 
     <browser:page
-        for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+        for="OFS.interfaces.IFolder"
         name="who-group-members"
         class=".views.GroupMembers"
         template="who_group_members.pt"
@@ -23,7 +23,7 @@
         />
 
     <browser:page
-        for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+        for="OFS.interfaces.IFolder"
         name="who-member"
         class=".views.Member"
         template="who_member.pt"

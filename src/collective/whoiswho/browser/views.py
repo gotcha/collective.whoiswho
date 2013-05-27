@@ -11,23 +11,30 @@ class BaseView(BrowserView):
         super(BaseView, self).__init__(context, request)
         self.groups_tool = getToolByName(self.context, 'portal_groups')
         self.membership_tool = getToolByName(self.context, 'portal_membership')
-        portal_url = self.portal_state.portal_url()
-        self.all_groups_url = "{0}/@@who-is-who".format(portal_url)
-        self.group_details_url = "{0}/@@who-group-members".format(portal_url)
-        self.member_url = "{0}/@@who-member".format(portal_url)
+        context_url = self.context.absolute_url()
+        self.all_groups_url = "{0}/@@who-is-who".format(context_url)
+        self.group_details_url = "{0}/@@who-group-members".format(context_url)
+        self.member_url = "{0}/@@who-member".format(context_url)
 
     @property
     def portal_state(self):
         return getMultiAdapter((self.context, self.request),
-                name=u"plone_portal_state")
+                               name=u"plone_portal_state")
 
     def getGroupInfo(self, id):
         group = self.groups_tool.getGroupById(id)
         result = dict(group=group,
-                title=group.getGroupTitleOrName(),
-                description=group.getProperty('description', ''),
-                url="{0}?group_id={1}".format(self.group_details_url, id))
+                      title=group.getGroupTitleOrName(),
+                      description=group.getProperty('description', ''),
+                      url="{0}?group_id={1}".format(self.group_details_url, id))
         return result
+
+    def filter_groups(self, group_ids):
+        IGNORED_GROUPS=['Site Administrators', 'Reviewers', 'AuthenticatedUsers',
+                        'Administrators']
+        for group_id in group_ids:
+            if group_id not in IGNORED_GROUPS:
+               yield group_id
 
     def getMemberInfo(self, id):
         member = self.membership_tool.getMemberById(id)
@@ -45,7 +52,7 @@ class BaseView(BrowserView):
 
     def getGroupsSortedByTitle(self, group_ids):
         result = list()
-        for id in group_ids:
+        for id in self.filter_groups(group_ids):
             result.append(self.getGroupInfo(id))
         result.sort(cmp_by_title)
         return result
@@ -110,4 +117,4 @@ class MemberDetails(BrowserView):
     @property
     def portal_state(self):
         return getMultiAdapter((self.context, self.request),
-                name=u"plone_portal_state")
+                               name=u"plone_portal_state")
